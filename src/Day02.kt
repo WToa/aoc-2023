@@ -27,10 +27,6 @@ private fun List<String>.dayTwoPartTwoSolver(): Int {
 }
 
 private fun getGamePartOne(line: String, redCubeLimit: Int, greenCubeLimit: Int, blueCubeLimit: Int): Game {
-    var redTotal = 0
-    var greenTotal = 0
-    var blueTotal = 0
-
     val parsedLine = line.split(":")
     val gameId = parsedLine[0].filter { it.isDigit() }.toInt()
     val cubeSets = parsedLine[1].split(";").map(::getCubeSet)
@@ -56,9 +52,6 @@ private fun getGamePartOne(line: String, redCubeLimit: Int, greenCubeLimit: Int,
                 }
             }
         }
-        if(redTotal > redCubeLimit || greenTotal > greenCubeLimit || blueTotal > blueCubeLimit) {
-            return@getGamePartOne Game(0, listOf(emptyList())) // hack
-        }
     }
 
     return Game(gameId, cubeSets)
@@ -69,7 +62,6 @@ private fun getGamePartTwo(line: String): Game {
     val gameId = parsedLine[0].filter { it.isDigit() }.toInt()
     val cubeSets = parsedLine[1].split(";").map(::getCubeSet).flatten()
 
-    println(cubeSets)
     val largestNumberOfRedCubes = cubeSets.filter { it.color == Color.RED }.maxBy { it.count }
     val largestNumberOfGreenCubes = cubeSets.filter { it.color == Color.GREEN }.maxBy { it.count }
     val largestNumberOfBlueCubes = cubeSets.filter { it.color == Color.BLUE }.maxBy { it.count }
@@ -86,7 +78,6 @@ private fun getCubeSet(cubeSet: String): List<Cube> {
         )
     }
 }
-
 
 data class Game(
     val id: Int,
